@@ -22,3 +22,35 @@ body {
     position: absolute;
     border-radius: 50%;
 }
+
+.resident.happy {
+    background-color: green;
+}
+
+.resident.sad {
+    background-color: red;
+}
+
+.indicator {
+    position: absolute;
+    width: 50px;
+    height: 5px;
+    background-color: yellow;
+    top: -10px;
+    left: -20px;
+}
+
+.interaction {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}

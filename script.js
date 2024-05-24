@@ -52,6 +52,7 @@ class Resident {
         const nearbyResidents = city.getResidentsNear(this.x, this.y);
         if (nearbyResidents.length > 0) {
             this.socialize(nearbyResidents[0]);
+            this.showInteraction();
         }
     }
 
@@ -61,6 +62,16 @@ class Resident {
                 this.mood = 'sad';
             }
         }
+    }
+
+    showInteraction() {
+        const residentElement = document.getElementById(`resident-${this.id}`);
+        const interactionElement = document.createElement('div');
+        interactionElement.className = 'interaction';
+        residentElement.appendChild(interactionElement);
+        setTimeout(() => {
+            interactionElement.remove();
+        }, 1000);
     }
 }
 
@@ -154,6 +165,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const residentElement = document.getElementById(`resident-${resident.id}`);
             residentElement.style.left = `${resident.x}px`;
             residentElement.style.top = `${resident.y}px`;
+
+            // Обновление цвета в зависимости от настроения
+            if (resident.mood === 'happy') {
+                residentElement.classList.add('happy');
+                residentElement.classList.remove('sad');
+            } else if (resident.mood === 'sad') {
+                residentElement.classList.add('sad');
+                residentElement.classList.remove('happy');
+            }
+
+            // Добавление индикаторов потребностей
+            let indicatorElement = residentElement.querySelector('.indicator');
+            if (!indicatorElement) {
+                indicatorElement = document.createElement('div');
+                indicatorElement.className = 'indicator';
+                residentElement.appendChild(indicatorElement);
+            }
+            indicatorElement.style.width = `${resident.needs.food / 2}px`;
         });
 
         requestAnimationFrame(update);
